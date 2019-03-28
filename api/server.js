@@ -1,13 +1,13 @@
 const express = require("express")
 const helmet = require("helmet")
 
-const cohortsRouter = require("./cohorts/router.js")
+const dishesRouter = require("./dishes/router.js")
 
 const server = express()
 
 server.use(helmet())
 server.use(express.json())
 
-server.use("/api/cohorts", cohortsRouter)
+server.use("/api/dishes", dishesRouter)
 
 module.exports = server
