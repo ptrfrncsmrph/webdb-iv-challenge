@@ -1,10 +1,10 @@
 exports.up = function(knex) {
-  return knex.schema.createTable("dishes", function(tbl) {
+  return knex.schema.createTable("ingredients", function(tbl) {
     tbl.increments()
     tbl.string("name", 255).notNullable()
   })
 }
 
 exports.down = function(knex) {
-  return knex.schema.dropTableIfExists("dishes")
+  return knex.schema.dropTableIfExists("ingredients")
 }
