@@ -1,9 +1,9 @@
 const router = require("express").Router()
 
-const db = require("../../data/dbConfig")
+const { getDishes, addDish } = require("./../../data/util")
 
 router.get("/", (_req, res) => {
-  db("dishes")
+  getDishes()
     .catch(err => {
       res.status(500).json(err)
     })
@@ -14,7 +14,7 @@ router.get("/", (_req, res) => {
 
 router.get("/:id", (req, res) => {
   const { id } = req.params
-  db("dishes")
+  getDishes()
     .where({ id })
     .catch(err => {
       res.status(404).json(err)
@@ -24,33 +24,20 @@ router.get("/:id", (req, res) => {
     })
 })
 
-// router.get("/:id/students", (req, res) => {
-//   const { id } = req.params
-//   db("students")
-//     .where({ cohort_id: id })
-//     .catch(err => {
-//       res.status(404).json(err)
-//     })
-//     .then(students => {
-//       res.status(200).json(students)
-//     })
-// })
-
 router.post("/", (req, res) => {
   const { name } = req.body
   name == null
     ? res.status(400).json({
         message: "Please include a name."
       })
-    : db("dishes")
-        .insert({ name })
+    : addDish({ name })
         .catch(_err => {
           res.status(500).json({
             message: "Error inserting dish."
           })
         })
         .then(([id]) => {
-          db("dishes")
+          getDishes()
             .where({ id })
             .catch(_err => {
               res.status(500).json({
